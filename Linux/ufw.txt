@@ -1,0 +1,5 @@
+sudo ufw status numbered/verbose
+sudo ufw reset
+sudo ufw enable
+sudo ufw reject from 192
+sudo ufw insert 1 delete reject from 192.168

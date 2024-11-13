@@ -1,0 +1,49 @@
+﻿# This GitHub Actions workflow is triggered when a pull request to the "main" branch is closed, specifically for changes under the `frontend/` directory.
+name: Front-end deployment
+
+on:
+  pull_request:
+    branches: [ "main" ]
+    types: [closed]
+    paths:
+      - 'Frontend/**'
+      
+permissions:
+  contents: read
+
+jobs:
+  build-docker-image:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build Docker Image
+      uses: mr-smithers-excellent/docker-build-push@v6
+      with:
+        image: ${{ vars.FRONT_DOCKER_IMAGE }}
+        registry: docker.io
+        tags: ${{ vars.FRONT_DOCKER_TAG }}
+        dockerfile: Frontend/Project/Dockerfile
+        directory: Frontend
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        buildArgs: API_BASE_URL=${{ vars.BACK_BASE_URL }}
+  
+  run-docker-container:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Run Docker Container
+      uses: appleboy/ssh-action@v1.1.0
+      with:
+        host: ${{ secrets.SSH_IP }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        script: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin &&
+                docker ps -a --format '{{.Names}}' | grep -e "${{ vars.FRONT_DOCKER_CONTAINER }}" | xargs docker stop | xargs docker rm -f &&
+                docker rmi $(docker images | grep -e "${{ vars.FRONT_DOCKER_IMAGE }}" | awk {'print $3'})
+                docker pull ${{ vars.FRONT_DOCKER_IMAGE }}:${{ vars.FRONT_DOCKER_TAG }} &&
+                for port in {${{vars.FRONT_DOCKER_CONTAINER_PORTS}}}; do docker run -d -p $port:${{ vars.FRONT_EXPOSE_PORT }} --name ${{ vars.FRONT_DOCKER_CONTAINER }}_$port --restart always ${{ vars.FRONT_DOCKER_IMAGE }}:${{ vars.FRONT_DOCKER_TAG }}; done
+

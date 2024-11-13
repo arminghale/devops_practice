@@ -1,0 +1,16 @@
+# Dockerfile to set up a TensorFlow environment with CRIU for checkpointing, install dependencies, and run the main application.
+
+FROM tensorflow/tensorflow:2.16.1
+USER root
+
+RUN add-apt-repository ppa:criu/ppa \
+    && apt install -y criu 
+
+
+WORKDIR /app
+ADD ./requirements.txt /app/requirements.txt
+RUN pip3 install -r requirements.txt
+ADD . /app
+
+
+CMD [ "python3", "main.py" ]

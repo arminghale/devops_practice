@@ -1,0 +1,35 @@
+sudo apt-get install apache2
+
+a2enmod proxy
+a2enmod proxy_http
+a2enmod proxy_ajp
+a2enmod rewrite
+a2enmod deflate
+a2enmod headers
+a2enmod proxy_balancer
+a2enmod proxy_connect
+a2enmod proxy_html
+
+sudo nano /etc/apache2/sites-available/Apache2Proxy.conf
+sudo nano /etc/apache2/sites-available/000-default.conf
+
+<VirtualHost *:*>
+    ProxyPreserveHost On
+
+    # Servers to proxy the connection, or;
+    # List of application servers:
+    # Usage:
+    # ProxyPass / http://[IP Addr.]:[port]/
+    # ProxyPassReverse / http://[IP Addr.]:[port]/
+
+    # Example: 
+    ProxyPass / http://10.10.0.15:8081/
+    ProxyPassReverse / http://10.10.0.15:8081/
+
+    ServerName localhost
+</VirtualHost>
+
+sudo a2ensite Apache2Proxy.conf 
+sudo systemctl restart apache2.service
+
+service apache2 restart

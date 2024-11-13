@@ -1,0 +1,31 @@
+# remove all containers
+sudo docker ps -a | cut -d ' ' -f1 | xargs sudo docker rm -f
+
+# remove none images
+sudo docker rmi $(sudo docker images | grep "<none>" | awk {'print $3'})
+
+# run and log
+docker run <image> && docker logs $(docker ps -lq)
+
+# run and bash terminal
+sudo docker run -it <image> /bin/bash
+
+# bash terminal in root mode in running container
+docker exec -u root -it <container> /bin/bash
+
+# remove unused volumes
+sudo docker volume prune -f
+
+# remove images except latest versions
+sudo docker images -q | tail -n +2 | xargs sudo docker rmi -f
+
+# remove specific
+sudo docker ps -a --filter "name=<name>" -q | xargs sudo docker rm -f
+sudo docker images --filter "reference=<name>" -q | xargs sudo docker rmi -f
+sudo docker network ls --filter "name=<name>" -q | xargs sudo docker network rm
+
+# bind host directory with read,write permission (ro->read only)
+docker run -v /path/to/host/directory:/path/in/container:rw <image>
+
+# bind volume
+docker run -v <volume>:/path/in/container <image>

@@ -1,0 +1,48 @@
+﻿# This GitHub Actions workflow is triggered when a pull request to the "main" branch is closed, specifically for changes under the `backend/` directory.
+name: Back-end deployment
+
+on:
+  pull_request:
+    branches: [ "main" ]
+    types: [closed]
+    paths:
+      - 'Backend/**'
+      
+permissions:
+  contents: read
+
+jobs:
+  build-docker-image:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build Docker Image
+      uses: mr-smithers-excellent/docker-build-push@v6
+      with:
+        image: ghcr.io/${{ secrets.GHCR_USERNAME }}/${{ vars.BACK_DOCKER_IMAGE }}
+        registry: ghcr.io
+        tags: ${{ vars.BACK_DOCKER_TAG }}
+        dockerfile: Backend/Project/Dockerfile
+        directory: Backend
+        username: ${{ secrets.GHCR_USERNAME }}
+        password: ${{ secrets.GHCR_TOKEN }}
+  
+  run-docker-container:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Run Docker Container
+      uses: appleboy/ssh-action@v1.1.0
+      with:
+        host: ${{ secrets.SSH_IP }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        script: echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin &&
+                docker ps -a --format '{{.Names}}' | grep -e "${{ vars.BACK_DOCKER_CONTAINER }}" | xargs docker stop | xargs docker rm -f &&
+                docker rmi $(docker images | grep -e "ghcr.io/${{ secrets.GHCR_USERNAME }}/${{ vars.BACK_DOCKER_IMAGE }}" | awk {'print $3'})
+                docker pull ghcr.io/${{ secrets.GHCR_USERNAME }}/${{ vars.BACK_DOCKER_IMAGE }}:${{ vars.BACK_DOCKER_TAG }} &&
+                for port in {${{vars.BACK_DOCKER_CONTAINER_PORTS}}}; do docker run -d -p $port:${{ vars.BACK_EXPOSE_PORT }} --name ${{ vars.BACK_DOCKER_CONTAINER }}_$port --restart always -e ASPNETCORE_ENVIRONMENT=Development ghcr.io/${{ secrets.GHCR_USERNAME }}/${{ vars.BACK_DOCKER_IMAGE }}:${{ vars.BACK_DOCKER_TAG }}; done
+

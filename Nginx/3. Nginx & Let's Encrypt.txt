@@ -1,0 +1,26 @@
+sudo apt update
+sudo apt install nginx
+
+sudo ufw app list
+sudo ufw allow 'Nginx Full'
+
+systemctl status nginx
+
+/etc/nginx/sites-enabled
+sudo nano /etc/nginx/nginx.conf
+
+server {
+  listen 80;
+  server_name users.mycompany.com;
+  location / {
+    proxy_pass http://localhost:5000;
+  }
+}
+
+----------------------------------------------------
+sudo apt install certbot python3-certbot-nginx
+
+sudo certbot --nginx -d example.com -d www.example.com
+
+sudo systemctl status certbot.timer
+sudo certbot renew --dry-run

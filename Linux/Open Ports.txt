@@ -1,0 +1,3 @@
+sudo lsof -i:22 --> Specific port
+sudo lsof -i -P -n | grep LISTEN --> open ports
+sudo ufw allow 8080/tcp

@@ -1,0 +1,22 @@
+# Ansible playbook to install NGINX on webservers, create the necessary directory, and start the NGINX service.
+
+- name: nginx installation
+  hosts: webservers
+  remote_user: <user>
+
+  tasks:
+  - name: create nginx directory
+    file:
+      path: /path/to/nginx
+      state: directory
+    
+  - name: install nginx
+    yum:
+      name: nginx
+      state: lastest
+  
+  - name: start nginx
+    service:
+      name: nginx
+      state: started
+

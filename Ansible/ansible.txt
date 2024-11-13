@@ -1,0 +1,18 @@
+# Ansible inventory file (/etc/ansible/hosts) with server groups and variables for SSH configuration
+
+
+[servers]
+server1 ansible_host=203.0.113.111 ansible_user=<user> ansible_port= <port> ansible_ssh_private_key_file= path/to/key
+server2 ansible_host=203.0.113.112 ansible_user=your_username  # Add username for consistency
+server3 ansible_host=203.0.113.113 ansible_user=your_username  # Add username for consistency
+
+[webservers]
+203.0.113.111
+
+[databases]
+203.0.113.112
+203.0.113.113
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+

@@ -1,0 +1,18 @@
+# Dockerfile to set up a TensorFlow environment with Mosquitto MQTT broker, running both services (Mosquitto and Python app) in a single container.
+
+FROM tensorflow/tensorflow:2.16.1 
+USER root
+
+RUN apt-add-repository ppa:mosquitto-dev/mosquitto-ppa && \
+    apt-get update && \
+    mkdir -p /run/mosquitto && \
+    apt-get install -y mosquitto && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY mosquitto.conf  /etc/mosquitto/mosquitto.conf
+
+WORKDIR /app
+RUN pip3 install -r requirements.txt
+
+CMD ["/bin/bash", "-c", "mosquitto -c /etc/mosquitto/mosquitto.conf -d & python3 main.py"]

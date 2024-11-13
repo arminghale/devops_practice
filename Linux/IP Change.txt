@@ -1,0 +1,18 @@
+sudo apt install net-tools
+
+ip a
+
+ifconfig
+
+ifconfig ens33 <ip>
+
+sudo dhclient -r ens33
+sudo dhclient ens33
+
+sudo ufw status verbose
+
+sudo ufw allow 22/tcp
+
+
+sudo ufw disable
+

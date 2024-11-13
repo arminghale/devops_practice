@@ -1,0 +1,15 @@
+﻿# Ansible playbook to rename a PostgreSQL table from 'user' to 'userinfo' on database servers.
+
+- name: database test
+  hosts: databases
+  remote_user: <user>
+  vars:
+    tablename: user
+    tablename_rename: userinfo
+    tableid: id
+    
+    tasks:
+    - name: rename table {{ tablename }}
+      postgresql_table:
+        table: {{ tablename }}
+        rename: {{ tablename_rename }}

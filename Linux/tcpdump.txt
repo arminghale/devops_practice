@@ -1,0 +1,3 @@
+sudo tcpdump --interface {name_here}
+
+sudo tcpdump -i {interface_name} -w /path/to/file.cap
