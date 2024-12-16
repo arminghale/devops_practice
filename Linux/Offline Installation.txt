@@ -1,0 +1,11 @@
+apt-offline
+
+sudo dpkg -i apt-offline package.deb
+
+sudo apt-offline set --install-packages PACKAGENAME --update apt-offline.sig
+
+apt-offline get --bundle bundle.zip apt-offline.sig
+
+sudo apt-offline install bundle.zip
+
+sudo apt install PACKAGENAME

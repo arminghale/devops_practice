@@ -1,0 +1,20 @@
+﻿IMAGE_ubuntu_server_2204   = "gusztavvargadr/ubuntu-server-2204-lts"
+
+# dnx -> docker and nginx
+
+Vagrant.configure("2") do |config|
+    NodeType1 = 2
+    (1..NodeType1).each do |type1_id|
+      config.vm.define "dnx#{type1_id}" do |type1_vm|
+        type1_vm.vm.box = IMAGE_ubuntu_server_2204
+        type1_vm.vm.hostname = "dnx#{type1_id}"
+        type1_vm.vm.network "private_network", ip: " 192.168.1.102#{type1_id}"
+        type1_vm.vm.provider "virtualbox" do |v|
+          v.name = "ubuntu-server-docker-nginx#{type1_id}"
+          v.memory = 1024
+          v.cpus = 2
+        end
+        type1_vm.vm.provision "shell", path: "bootstrap-docker-nginx.sh"
+      end
+    end
+end
