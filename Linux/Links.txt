@@ -1,0 +1,2 @@
+﻿ln [/path/to/file] [/path/to/link]
+    -s (softlink)

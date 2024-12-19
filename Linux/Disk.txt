@@ -1,0 +1,27 @@
+﻿df
+    -h (human)
+    -i (inodes)
+lsblk   (block lists)
+du
+    -sh [name] (show size)
+ncdu [name] (graphical du)
+blkid (uuid of disk-/etc/fstab)
+fdisk [disk dicretory-/dev/sda|sdb]
+    - m (help-use it)
+    - do what you want -> partition lable -> format
+    - w (write and save)
+mkfs.[ext2|3|4] [disk] (format disk)
+mount [disk] [directory] (not persistant)
+    -a (look to fstub and reload based on it)
+unmount [directory]
+/etc/fstab -> [disk] [directory] [type] [option] [dump] [pass]
+
+# LVM
+vgs (volume groups)
+vgextend [group] [disk]
+lvs (logical volumes)
+lvextend [lv] [disk]
+resize2fs [lv]
+
+# cleanup purposes
+du -cha --max-depth=1 / | grep -E "M|G"

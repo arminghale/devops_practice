@@ -1,0 +1,24 @@
+﻿adduser|usermod
+    -aG [group] (add to group)
+    -d (home directory)
+    -m (create home directory)
+    -s (shell)
+    -L (lock)
+    -U (unlock)
+userdel
+    -r (delete home directory)
+
+groupadd|groupmod
+    -g [id>1000]
+groupdel
+
+passwd
+last (last logins)
+id (uid,gid,groups)
+su/sudo
+w (info about other sessions)
+
+/etc/shadow
+/etc/passwd
+/etc/group
+/etc/sudoers (use vi sudo to change it)

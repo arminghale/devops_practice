@@ -1,6 +1,25 @@
-sudo iptables -l
+iptables
+    -L (list)
+    -t [table] (table-default is filter)
+    -C [rule] (check)
+    -A [rule] (append)
+    -I [rule] (insert)
+    -D [rule] (delete)
+    -F (flush)
 
-sudo iptables -A INPUT -s 192.168.10.20 -p tcp -j DROP -m limit --limit 60/second 
+rule  
+    [chain name]
+    -s [source ip] (source address)
+    -p [protocol] (protocol)
+    -j [target -> ACCEPT|DROP|RETURN] (target)
+    -d [destination ip] (destination address)
+    -m [modules] (modules-comment|limit) -> -m [module] --[module] [input]
+    --dport [port] (port-before this protocol should specified)
+
+iptables-save (save rules)
+    -iptables-save > [/path/to/file]
+
+iptables -A INPUT -s 192.168.10.20 -p tcp -j DROP -m limit --limit 60/second 
 
 sysctl net.ipv4.ip_forward=1
 

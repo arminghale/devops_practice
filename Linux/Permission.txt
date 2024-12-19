@@ -1,0 +1,19 @@
+﻿  user  group   othe
+  r w x
+  4 2 1
+d (directory)
+l (link)
+s (socket)
+- (file-else)
+
+chmod [/path/to/file|directory]
+    +|- x|r|w (give it to/from all)
+    -777 (permissions)
+chown [user]:[group] [/path/to/file|directory]
+
+lsattr [/path/to/file|directory] (attribute list)
+chattr [/path/to/file|directory]
+    +|- i (immutable-no change)
+    +|- a (append only)
+
+

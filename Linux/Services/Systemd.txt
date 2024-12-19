@@ -1,0 +1,8 @@
+﻿systemctl
+    start|stop|enable|disable|mask|unmask|is-enabled|is-active [unit]
+    edit [unit]
+
+journalctl
+    -u [unit]
+    -f (follow)
+

@@ -1,0 +1,40 @@
+﻿cat [/path/to/file]
+less [/path/to/file]
+tail [/path/to/file]
+    -n [number]
+    -f (follow)
+head [/path/to/file]
+    -n [number]
+
+sed -i [patterns] [/path/to/file]
+    -[patterns] = 's/[find pattern]/[replace pattern]/g'
+
+cut (like split on string values but make a table)
+    -d [delimeter] 
+    -f[column number]
+
+wc (word count)
+    -l (lines)
+
+diff (compare text file)
+cmp (compare file byte by byte)
+sort (sort text file)
+
+vmstat (virtual memory status)
+iotop (I\O usage)
+tar (compress)
+    -czvf [name.tar.gz] [/path/to/file]
+file [/path/to/file] (what is file type)
+dd (create file|copy file)
+
+watch [command](run command priodically)
+    -n [seconds]
+lsb-release -a (OS info)
+uname (system info)
+
+env (show environment variables)
+$[environment name]
+export [environment name]=[value] (set environment variables)
+
+ulimit (set limitation)
+    -a (show current status)

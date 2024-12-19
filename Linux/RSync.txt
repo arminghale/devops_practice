@@ -1,0 +1,8 @@
+﻿rsync [source dir] [destination dir] (can use [username]@[ip]:[path/to/destination] for any of them)
+    -r (recursive)
+    -a (recursive & archive)
+    -n (double-check)
+    -v (verbose)
+    -anv
+    -anz
+    (use this for using ssh key [-e "ssh [-p port]  -i [path/to/key]"] before [username]@[ip] . . .)

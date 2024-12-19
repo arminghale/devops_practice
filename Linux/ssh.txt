@@ -1,4 +1,15 @@
 ﻿ssh-keygen
-cat "pub key" | ssh "user"@"ip" "mkdir .ssh && touch .ssh/authorized_keys && cat >> .ssh/authorized_keys"
-ssh -i "path/to/key"  username@ip
-scp -i "path/to/key" -r "path/to/directory" username@ip:path/to/destination
+cat [path/to/publickey] | ssh [-p port] [username]@[ip] "mkdir .ssh && touch .ssh/authorized_keys && cat >> .ssh/authorized_keys"
+sshd -t (check configuration)
+
+/etc/ssh/sshd_config
+    -port
+    -listenaddress
+    -permitrootlogin (default is good just uncomment)
+    -AllowGroups
+    -AllowUsers
+
+ssh [username]@[ip]
+    -i [path/to/key]
+    -p [port]
+scp -i [path/to/key] -r [path/to/directory] [username]@[ip]:[path/to/destination] (copy file over ssh)

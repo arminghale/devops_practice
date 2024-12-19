@@ -1,0 +1,22 @@
+﻿jobs
+    -l (pid)
+fg [jobid]
+bg [jobid] -> &
+top
+    sorts (M-memory,N-pid,P-cpu,T-time)
+    -u [user]
+    graphs (t-cpu,m-memory)
+    hierarchy (V)
+    filter (o-activate)-(%MEM>5.0)
+    kill (k [])
+htop
+ps
+    -aux
+    [pid]
+pgrep []-> ps | grep []
+pidof [name]
+kill [pid] (-l,-9)
+nice
+    -n [-20..19] [command]
+renice
+    -n [-20..19] [pid]

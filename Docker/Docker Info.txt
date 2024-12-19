@@ -1,0 +1,4 @@
+﻿# dockerfile commands
+RUN (create a new layer and executes it)
+CMD (only 1-default command on starting container)
+ENTRYPOINT (make container executable)
