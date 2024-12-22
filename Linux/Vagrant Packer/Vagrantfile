@@ -1,20 +1,39 @@
 ﻿IMAGE_ubuntu_server_2204   = "gusztavvargadr/ubuntu-server-2204-lts"
 
-# dnx -> docker and nginx
-
 Vagrant.configure("2") do |config|
-    NodeType1 = 2
-    (1..NodeType1).each do |type1_id|
-      config.vm.define "dnx#{type1_id}" do |type1_vm|
+    config.vm.provision "shell", path: "bootstrap-docker-nginx.sh"
+    # access through wsl
+    config.ssh.host = "172.31.0.1" # host ip in wsl (ip route show | grep -i default | awk '{ print $3}')
+    Type1 = 1
+    (1..Type1).each do |type1_id|
+      config.vm.define "controller#{type1_id}" do |type1_vm|
         type1_vm.vm.box = IMAGE_ubuntu_server_2204
-        type1_vm.vm.hostname = "dnx#{type1_id}"
-        type1_vm.vm.network "private_network", ip: " 192.168.1.102#{type1_id}"
+        type1_vm.vm.hostname = "controller#{type1_id}"
+        type1_vm.vm.network "private_network", ip: "192.168.56.11#{type1_id}"
+        type1_vm.vm.network "forwarded_port", id: "ssh", guest: 22, host_ip: "0.0.0.0", host: "222#{type1_id}", auto_correct: true # ssh port forward setting for wsl to see vms
+        type1_vm.vm.disk :disk, size: "20GB", primary: true # apparently its not working
         type1_vm.vm.provider "virtualbox" do |v|
-          v.name = "ubuntu-server-docker-nginx#{type1_id}"
-          v.memory = 1024
+          v.name = "ubuntu-server-controller-#{type1_id}"
+          v.memory = 2048
           v.cpus = 2
         end
-        type1_vm.vm.provision "shell", path: "bootstrap-docker-nginx.sh"
+        type1_vm.vm.provision "shell", path: "install_ansible.sh"
+      end
+    end
+
+    Type2 = 2
+    (1..Type2).each do |type2_id|
+      config.vm.define "node#{type2_id}" do |type2_vm|
+        type2_vm.vm.box = IMAGE_ubuntu_server_2204
+        type2_vm.vm.hostname = "node#{type2_id}"
+        type2_vm.vm.network "private_network", ip: "192.168.56.12#{type2_id}"
+        type2_vm.vm.network "forwarded_port", id: "ssh", guest: 22, host_ip: "0.0.0.0", host: "223#{type2_id}", auto_correct: true # ssh port forward setting for wsl to see vms
+        type2_vm.vm.disk :disk, size: "20GB", primary: true
+        type2_vm.vm.provider "virtualbox" do |v|
+          v.name = "ubuntu-server-node-#{type2_id}"
+          v.memory = 1024
+          v.cpus = 1
+        end
       end
     end
 end
