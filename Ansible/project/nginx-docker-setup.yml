@@ -1,0 +1,9 @@
+﻿- hosts: servers
+  become: true
+  gather_facts: yes
+  name: setup nginx and docker
+  roles:
+  # install and configure nginx service
+    - { role: nginx, become: True, tags: setup_nginx }
+  # install and configure docker service
+    - { role: docker, become: True, tags: setup_docker }

@@ -1,0 +1,36 @@
+---
+- name: "apt-get update"
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install dependecies
+  apt:
+    name: "{{ docker_packages }}"
+    state: latest
+  tags: install_dependecies
+
+- name: Add docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+  tags: add_gpg
+
+- name: Add docker repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+  tags: add_repository
+
+- name: Update apt and install docker-ce
+  apt:
+    name: docker-ce
+    state: latest
+    update_cache: true
+  tags: install_dockerce
+
+- name: start docker
+  service:
+    name: docker
+    state: started
+  tags: configure_docker

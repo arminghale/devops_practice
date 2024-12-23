@@ -1,0 +1,9 @@
+﻿ansible [group] -i [path/to/hosts] -m [command] -a [args] -u [user]
+
+ansible all -m ping -u root
+ansible all -m copy -a "src=/path/to/file dest=/path/to/file"
+ansible server1:server2 -m apt -a "name=vim state=latest" -u root
+
+ansible all -m gather_facts --tree /tmp/facts
+ansible all -m setup -a "filter=ansible_os_family"
+ansible all -m setup -a "gather_subset=virtual,!all,!min"

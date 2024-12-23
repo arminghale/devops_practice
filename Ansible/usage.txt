@@ -1,0 +1,11 @@
+﻿ansible-playbook [main]
+    -i [/path/to/hostsfile]
+    -vvvvv (verbosity)
+    --check (check whether it can do it all or not)
+    --dif (different with current state and next state)
+    --tag [tag] (run only these tags)
+
+
+ansible-galaxy install [rolename]
+ansible-galaxy install -r [/path/to/file]
+~/.ansible/role
