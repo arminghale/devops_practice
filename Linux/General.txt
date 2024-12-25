@@ -38,3 +38,6 @@ export [environment name]=[value] (set environment variables)
 
 ulimit (set limitation)
     -a (show current status)
+
+netstat
+    -ntlp (what listens to what) | grep [servicename]

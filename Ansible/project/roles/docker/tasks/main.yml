@@ -1,36 +1,45 @@
 ---
-- name: "apt-get update"
-  apt:
-    update_cache: yes
-    cache_valid_time: 3600
+## using others role (best way)
 
-- name: Install dependecies
-  apt:
-    name: "{{ docker_packages }}"
-    state: latest
-  tags: install_dependecies
+- ansible.builtin.include_role:
+    name: geerlingguy.docker
+    apply:
+      tags: install_docker
 
-- name: Add docker GPG key
-  apt_key:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    state: present
-  tags: add_gpg
+## manuall installation
 
-- name: Add docker repository
-  apt_repository:
-    repo: deb https://download.docker.com/linux/ubuntu focal stable
-    state: present
-  tags: add_repository
+# - name: "apt-get update"
+#   apt:
+#     update_cache: yes
+#     cache_valid_time: 3600
 
-- name: Update apt and install docker-ce
-  apt:
-    name: docker-ce
-    state: latest
-    update_cache: true
-  tags: install_dockerce
+# - name: Install dependecies
+#   apt:
+#     name: "{{ docker_packages }}"
+#     state: latest
+#   tags: install_docker
 
-- name: start docker
-  service:
-    name: docker
-    state: started
-  tags: configure_docker
+# - name: Add docker GPG key
+#   apt_key:
+#     url: https://download.docker.com/linux/ubuntu/gpg
+#     state: present
+#   tags: install_docker
+
+# - name: Add docker repository
+#   apt_repository:
+#     repo: deb https://download.docker.com/linux/ubuntu focal stable
+#     state: present
+#   tags: install_docker
+
+# - name: Update apt and install docker-ce
+#   apt:
+#     name: docker-ce
+#     state: latest
+#     update_cache: true
+#   tags: install_docker
+
+# - name: start docker
+#   service:
+#     name: docker
+#     state: started
+#   tags: configure_docker

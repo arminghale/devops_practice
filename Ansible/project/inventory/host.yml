@@ -1,14 +1,50 @@
 all:
   children:
-    servers:
+    webservers:
       hosts:
           web1:
             ansible_host: 192.168.56.121
             ansible_user: vagrant
             ansible_port: 22
-    dbservers:
-        hosts:
-          db1:
+          web2:
             ansible_host: 192.168.56.122
             ansible_user: vagrant
             ansible_port: 22
+          web3:
+            ansible_host: 192.168.56.123
+            ansible_user: vagrant
+            ansible_port: 22
+    mongo_sharded_cluster:
+      children:
+        mongocfg_servers:
+          hosts:
+            cgf1:
+              ansible_host: 192.168.56.121
+              ansible_user: vagrant
+              ansible_port: 22
+        mongos_servers:
+          hosts:
+            mongos1:
+              ansible_host: 192.168.56.121
+              ansible_user: vagrant
+              ansible_port: 22
+        mongo_shard_01:
+          hosts:
+            shard1_1:
+              ansible_host: 192.168.56.121
+              ansible_user: vagrant
+              ansible_port: 22
+        mongo_shard_02:
+          hosts:
+            shard2_1:
+              ansible_host: 192.168.56.121
+              ansible_user: vagrant
+              ansible_port: 22
+            shard2_2:
+              ansible_host: 192.168.56.121
+              ansible_user: vagrant
+              ansible_port: 22
+            shard2_3:
+              ansible_host: 192.168.56.121
+              ansible_user: vagrant
+              ansible_port: 22

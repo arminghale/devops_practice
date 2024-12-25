@@ -1,0 +1,13 @@
+﻿# dockerfile commands
+RUN (create a new layer and executes it)
+CMD (only 1-default command on starting container)
+ENTRYPOINT (make container executable - pass parameter from command line)
+
+COPY (copy from host-new layer)
+ADD (copy from host and url-new layer)
+
+EXPOSE (expose port)
+
+LABEL (add label)
+
+STOPSIGNAL

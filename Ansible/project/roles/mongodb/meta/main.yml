@@ -1,0 +1,4 @@
+﻿collections:
+  - community.mongodb
+roles:
+  - superset1.mongodb

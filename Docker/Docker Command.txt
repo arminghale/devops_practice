@@ -1,0 +1,55 @@
+﻿docker container run [imagename] [commands]
+        --name [name]
+        -d (detach)
+        -it (intractive tty)
+        --hostname [hostname]
+        -p [hostport:containerport]
+        -P (publish all)
+        -v [host:container] (bind volume)
+        --mount [source=-,target=-]
+        -e [environment]
+        --env-file [/path/to/file]
+        --restart [mode-always|no|on-failure[:max-retries]|unless-stopped]
+        --rm (remove when stops)
+docker container 
+    -cp (copy file to/from container)
+    -exec (execute command)
+    -create
+    -start
+    -stop
+    -diff (different between image and container)
+    -logs 
+        -f (follow)
+        --tail (last parts)
+
+docker image
+        -build
+        -ls
+        -rm
+        -history
+        -save
+                -o [name]
+        -load
+                -i [path/to/file]
+        -pull/push
+        -tag
+
+docker volume [name]
+        -create
+        -rm
+        -ls
+docker network [name]
+        -create
+            -d [drivername-default bridge]
+        -rm
+        -ls
+docker system
+        -df
+        -info
+
+docker compose 
+        -config (syntax check)
+        -up -d (up the compose)
+        -down -v (down the services)
+        -ps (list services)
+        

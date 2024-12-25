@@ -1,0 +1,12 @@
+﻿ansible-vault create vault.yml
+ansible-vault encrypt [/path/to/file]
+
+chmod 600 vault.pass
+
+## in ansible.cfg
+[defaults]
+vault_password_file = /path/to/vault.pass
+
+ansible-vault edit vault.yml
+ansible-vault decrypt vault.yml
+ansible-vault rekey vault.yml

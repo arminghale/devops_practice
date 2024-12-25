@@ -1,0 +1,7 @@
+﻿collections:
+  - name: community.mongodb
+roles:
+  - name: geerlingguy.docker
+    src: https://github.com/geerlingguy/ansible-role-docker
+  - name: superset1.mongodb
+    src: https://github.com/superset1/Ansible_role_mongodb

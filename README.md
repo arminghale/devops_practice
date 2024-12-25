@@ -20,6 +20,10 @@ Here’s a quick tour of the chaos you’ll find here:
 ### 📝 Ansible Adventures
 - **Ansible Playbooks**: Playbooks that help me avoid SSH-ing into servers manually. Automation = happiness.
 
+### 📰 Vagrant and Packer Adventures
+- **Packer**: Packer examples to make customize VM images for VirtualBox
+- **Vagrant**: My Vagrantfile for creating customize VMs in VirtualBox
+
 ### 🌐 NGINX Nonsense
 - **NGINX Configs**: Because what’s DevOps without setting up a web server or a reverse proxy?
 

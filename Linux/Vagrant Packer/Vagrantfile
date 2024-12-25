@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
     #   end
     # end
 
-    Type2 = 2
+    Type2 = 5
     (1..Type2).each do |type2_id|
       config.vm.define "node#{type2_id}" do |type2_vm|
         type2_vm.vm.box = IMAGE_ubuntu_server_2204

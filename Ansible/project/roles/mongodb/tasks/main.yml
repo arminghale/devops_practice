@@ -1,0 +1,4 @@
+- ansible.builtin.include_role:
+    name: superset1.mongodb
+    apply:
+      tags: install_mongodb
